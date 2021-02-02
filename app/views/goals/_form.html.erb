@@ -1,0 +1,40 @@
+<% case action %>
+    <% when :edit  %>
+        <% action_url = goal_url(goal) %>
+        <% form_method = "PATCH" %>
+        <% submit_text = "Update Goal" %>
+    <% when :new %>
+        <% action_url = user_goals_url(user) %>
+        <% form_method = "POST" %>
+        <% submit_text = "Add Goal" %>
+<% end %>
+
+<%= render "layouts/errors" %>
+
+<form action="<%= action_url %>" method="POST">
+    <input type="hidden" name="_method" value="<%= form_method %>">
+
+    <%= auth_token %>
+
+    <label for="title">Title</label>
+    <input id="title" type="text" name="goal[title]" value="<%= goal.title %>">
+    <br><br>
+    <label for="text">Description</label>
+    <textarea name="goal[text]" id="text"><%= goal.text %></textarea>
+    <br><br>
+    <label>
+    <input type="radio" name="goal[private]" value= "true"
+        <%= "checked" if goal.private %>>Private </label>
+    <label>
+    <input type="radio" name="goal[private]" value= "false"
+        <%= "checked" unless goal.private %>>Public </label>
+    <br><br>
+    <label>
+    <input type="radio" name="goal[finished]" value= "true"
+        <%= "checked" if goal.finished %>>Completed </label>
+    <label>
+    <input type="radio" name="goal[finished]" value= "false"
+        <%= "checked" unless goal.finished %>>Ongoing </label>
+    <br><br>
+    <input type="submit" value="<%= submit_text %>">
+</form>

@@ -1,0 +1,19 @@
+<% case sender_page %>
+    <% when "user_page"  %>
+        <% action_url = user_comments_url(user) %>
+    <% when "goal_page" %>
+        <% action_url = goal_comments_url(goal) %>
+<% end %>
+
+<%= render "layouts/errors" %>
+
+<form action="<%= action_url %>" method="POST">
+
+    <%= auth_token %>
+
+    <label for="text">Comment:</label>
+    <textarea name="comment[text]" id="text"></textarea>
+    <br><br>
+    
+    <input type="submit" value="Add Comment">
+</form>

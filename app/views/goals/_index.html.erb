@@ -1,0 +1,11 @@
+<h2><%= user.username %>'s Goals</h2>
+
+<ul>
+    <% if user == current_user %>
+        <%= render goals %>
+    <% else %>
+        <% goals.each do |goal| %>
+           <%= (render goal) unless goal.private %>
+        <% end %>
+    <% end %>
+</ul>

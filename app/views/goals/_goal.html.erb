@@ -1,0 +1,24 @@
+<ul>
+    <li><%= link_to goal.title, goal_url(goal) %><br>
+    Description: <%= goal.text %><br>
+    Visibility: <%= goal.private ? "Private" : "Public" %><br>
+    Progress: <% if goal.finished %>
+                    Complete  <%= @user == current_user ? (button_to "Mark Unfinished", flip_progress_goal_url(goal), method: :get) : "" %>
+               <% else %>
+                    Ongoing  <%= @user == current_user ? (button_to "Mark Completed", flip_progress_goal_url(goal), method: :get) : "" %>
+               <% end %>
+        <br>
+    Cheers: <%= goal.cheers_counter%><br>
+        
+        <% cheer = goal.cheers.find_by(user_id: current_user.id) %>
+        <!-- if current_user has already cheered this goal or if current_user has no more cheers to give-->
+        <% if ( cheer || current_user.cheers_to_give_counter < 1 ) %>
+            <% @cheer_possible = false %>
+        <% else %>
+            <% @cheer_possible = true %>
+        <% end %>
+
+    <%= button_to "Cheer!", new_goal_cheer_url(goal), method: :get  if @cheer_possible %> 
+    
+    </li>
+</ul>

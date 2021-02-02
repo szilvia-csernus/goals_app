@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GoalsApp</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+
+  <h1>GOALS APP</h1>
+
+    <% unless current_user.nil? %>
+        Welcome <%= current_user.username  %>
+        <br><br>
+        <%= button_to "Log Out", session_url, method: :delete  %>
+        <br>
+        Cheers remaining: <%= current_user.cheers_to_give_counter %>
+      <% else %>
+        <%= link_to "Sign Up", new_user_url  %>
+        <br><br>
+        or
+        <br><br>
+        <%= link_to "Log In", new_session_url %>
+      <br><br>
+    <% end %> 
+    <%= render "layouts/errors" %>
+    <br>
+    
+    <%= yield %>
+
+  </body>
+</html>

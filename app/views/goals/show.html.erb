@@ -1,0 +1,41 @@
+
+<h2><%= @goal.title %></h2>
+<br>
+<table>
+    <tbody>
+        <tr>
+            <td>Description: </td>
+            <td><%= @goal.text %></td>
+        </tr>
+        <tr>
+            <td>Visibility: </td>
+            <td><%= @goal.private ? "Private" : "Public" %></td>
+        </tr>
+        <tr>
+            <td>Progress: </td>
+            <td><%= @goal.finished ? "Complete" : "Ongoing"  %></td>
+        </tr>
+        <tr>
+            <td>Cheers: </td>
+            <td><%= @goal.cheers_counter %></td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<% unless @goal.comments.empty? %>
+    <%= render 'comments/index', goal: @goal, comments: @comments %>
+<% end %>
+
+<h2>New Comment</h2>
+<%= render 'comments/new', goal: @goal, sender_page: "goal_page" %>
+<br>
+
+<br>
+<% if @user == current_user %>
+    <%= button_to "Edit Goal", edit_goal_url(@goal), method: :get%>
+    <%= button_to "Delete Goal", goal_url(@goal), method: :delete%>
+   <br> 
+<% end %>
+
+
+<%= link_to "Back to User", user_url(@user), method: :get %>
